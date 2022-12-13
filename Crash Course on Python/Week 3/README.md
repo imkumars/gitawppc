@@ -1,0 +1,50 @@
+# WEEK 3:
+### while Loops:
+		Note: Types of loops we can use are, while loop, for loop, recursion
+			Note: Break and continue
+				You can interrupt both while and for loops using the break keyword.
+				We normally do this to interrupt a cycle due to a separate condition.
+				You can use the continue keyword to skip the current iteration and continue with the next one.
+				This is typically used to jump ahead when some of the elements of the sequence aren’t relevant.
+			
+### For Loops:
+			Note: Advantage of for loop over while loop is that, for loops can itterates / loop through any data types like string, numbers, lists and so on.
+			
+			Note: Use for loops when there's a sequence of elements that you want to iterate. Use while loops when you want to repeat an action until a condition changes. 
+			
+			Note: range() function:
+				Ex: range(5) # has values 0,1,2,3,4
+				Ex: range(1, 5) # has values 1,2,3,4
+				Ex:range(1, 5, 2) # has values 1,3 || range(p,q,r): p, p+r, p+2r, p+3r, ... q-1
+				
+			Note: end parameter in print function: By default print function goes to next line after executing that statement. But we can prevent that by keyword argument to stay and continue in the same line.
+				Ex: for num in range(5):
+						print(x, end= " ")
+						
+					# result 0 1 2 3 4
+				By default print(x, end=f"\n")
+				
+### Recursion:
+			Recursion is the repeated application of the same procedure to a smaller problem.
+			In programming, recursion is a way of doing a repetitive task by having a function call itself.
+			A recursive function calls itself usually with a modified parameter until it reaches a specific condition. This condition is called the base case.
+			A recursive function must include a recursive case and base case. The recursive case calls the function again, with a different value. The base case returns a value without calling the same function.
+			In python we can call recursive function 1000 times. That's the max limit.
+			
+			General syntax:
+			def recursive_function(parameters):
+				if base_case_condition(parameters):
+					return base_case_value
+				recursive_function(modified_parameters)
+			
+			Ex: 
+				def sum_positive_numbers(n):
+					# The base case is n being smaller than 1
+					if n < 1:
+						return n
+
+					# The recursive case is adding this number to the sum of the numbers smaller than this one.
+					return n + sum_positive_numbers(n-1)
+
+				print(sum_positive_numbers(3)) # Should be 6 ,ie 3+2+1
+				print(sum_positive_numbers(5)) # Should be 15 ,ie 5+4+3+2+1

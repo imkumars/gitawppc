@@ -1,0 +1,52 @@
+# WEEK 2:
+### Expressions and Variables:
+Some popular data types in python are,
++ string: Anything between qoutes "" or ''
++ integer: -1,0,1
++ float: real numbers like 2.5
++ boolean: True or False
+			
+			type() function to returns data type.
+			Ex: print(type("8")) # returns <class str>
+			Ex: print(type(8)) # returns <class int>
+			Ex: print(type(8.1)) # returns <class float>
+			
+			Note: When attempting to mix incompatible data types, you may encounter a TypeError.
+			
+			Variables = Names that we give to certain values in our programs.
+			Assignment = The process of storing a value inside a variable.
+			Expressions = Combination of numbers,symbols or other variables that produce a result when evaluated.
+			Implicit conversion = Interpreter automatically converts one data type into another.
+				Ex: print(7 + 3.5) # result 10.5, here it wont throw error eventhough 7 is int data type and 3.5 is float
+					Behind the scenes 7 is converted into float (implicit conversion) and then added.
+			Explicit conversion = When we intentionally want to convert from one data type to another.
+				Ex: print(7 + int(3.5)) # result 7 + 3 = 10
+				
+### Functions:
+			It is possible to return multiple values from a function.
+				Ex: def my_function(a, b, c):
+						a += b
+						b += c
+						c += a
+						return a, b, c
+						
+					val1, val2, val3 = my_function(1, 2, 3)
+					# here val1 = 1 + 2 ie 3, val2 = 2 + 3 ie 5, val3 = 3 + 1 ie 4
+					
+			
+			None = None is a very special data type in Python used to indicate that things are empty or that they return nothing from a function.
+			
+### Conditions:
+			Note: print(1 < "1") # type error cant compare int with string
+			Note: print(1 == "1") # result False, eventhough it is comparing int with str python interpreter has no problem telling it has False. 
+			
+			When comparing two words, it is actually comparing alphabetical order of the first letter.
+				Ex: print("yellow" > "cyan") # y comes after c so result is True.
+				Ex: print("brown" > "magenta") # m comes after b so result is False.
+				
+			Note: When return statement is executed then function exits and following statements wont get executed.
+				Ex: function to return True if number is even & False if number is odd
+					def is_even(num):
+						if num % 2 == 0:
+							return True
+						return False

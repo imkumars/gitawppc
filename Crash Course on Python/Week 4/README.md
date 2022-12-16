@@ -1,0 +1,159 @@
+# WEEK 4:
+### Strings:
+			concatinating: Ex: print("Name is " + strVariable + ", and favorite color is blue.")
+			Note: We cab multiply a string with certain number of times. Ex: print("Hello" * 3) #result is "HelloHelloHello"
+			Note: To find length of string /iterable Ex: print(len("Hello")) #result 5
+			Note: String indexing:
+					Ex: fruit = "Orange"
+						print(fruit[0])  #result "O" , index always start with 0
+						Slicing /Sbustring
+						print(fruit[1:]) #result "range", print everything starting from index 1
+						print(fruit[:3]) #result "Ora", print everything from starting index till index 3 but not including index 3
+						print(fruit[1:4]) #result "ran" from index 1 till index 4 but not including index 4
+						print(fruit[:3] + fruit[3:]) #result "Orange"
+			
+			Note:In Python, strings are immutable. This means that they can't be modified.
+				So if we wanted to fix a typo in a string, we can't simply modify the wrong character.
+				We would have to create a new string with the typo corrected. We can also assign a new value to the variable holding our string.
+			Note: We cant change a single letter from a string. When we try this we get TyperError.
+				Ex: fruit[0] = "B"  #result typeError
+					But if at all we want to change we can do so by,
+						fruit = "B" + fruit[1:]
+						print(fruit)  #result "Brange"
+			
+			Note: To get the index of certain letter using .index{} method,
+				Ex: fruit.index("O")  #result 0
+				Ex: fruit.index("ran") #result 1, returns when match first letter's index
+				
+			Note: To check whether certain letter present in or part of that string,
+				Ex: "ran" in fruit #result True
+			
+			Note: Popular other methods which can be used on string
+				Ex: string.upper() # to convert all letters to capital
+				Ex: string.lower() # toconvert all letters to lower
+				Ex: " yes ".strip() # result "yes" ,this method removes tabs, whitespace around that string
+				Ex: " yes ".lstrip() # result "yes ", this method removes spaces at leftside of string
+				Ex: " yes ".rstrip() # result " yes", this method removes spaces at rightside of string
+				Ex: "hello".count("l") #result 2, count number of times certain letter is present in given string.
+				Ex: "hello".endswith("lo") #result True, check whether given string ends with specific letters
+				Ex: "hello".isnumeric() #result False, check whether given string is all numbers
+				Ex: "1234".isnumeric() #result True
+				Ex: "hello".isalpha() #result True,check whether all letters is alphabet
+				Ex: " ".join(["Hello","World"]) #result "Hello World"
+				Ex: "...".join(["Hello","World"]) #result "Hello...World"
+				Ex: "Hello World".split() #result ["Hello", "World"], returns a list which splits a string with the delimeter passed inside split method. 
+				Ex: string.replace(old, new) #returns a new string where all occurrences of old have been replaced by new.
+			
+			Note: Formating string using .format() method
+				Ex: name = "Ben"
+					age = 12
+					# with same order,as passed inside format argument
+					print("Name is {}, age is {}.".format(name, age)) #result Name is Ben, age is 12.
+					# with using keyword argument
+					print("Name is {nname}, age is {aage}.".format(aage=age, nname=name)) #result Name is Ben, age is 12.
+					# with using number starting with 0
+					print("Name is {1}, age is{0}.".format(name, age)) #result Name is 12, age is Ben
+				Note: Another way of formating option is to use f-string (this feature was added in Python 3.6)
+					print(f"Name is {name}, age is {age}") #result Name is Ben, age is 12.
+				
+				Ex: price = 6.33444
+					age = 12
+					print("Price is {:.2f}, age is {:.2f}".format(price, age)) # result "Price is 6.33, age is 12.00"
+					
+				Note: '{:d}'.format(10.5) #result is '10'
+					  '{:.2f}'.format(0.5) #result is '0.50'
+					  '{:.2s}'.format('Python') #result is 'Py'
+					  '{:<6s}'.format('Py') #result is 'Py    '
+					  '{:>6s}'.format('Py') #result is '    Py'
+					  '{:^6s}'.format('Py') #result is '  Py  '	
+					
+				Ex: def to_celsius(x):
+						return (x-32)*5/9
+					for x in range(0, 101, 10):
+						print("{:>3}F | {:>6.2f} C".format(x, to_celsius(x)))
+						# {:>3} -- 
+							> means align to right
+							3 means align to 3 steps
+						# {:>6.2f} --
+							> means align to right
+							6 means align to 6 steps
+							.2f means give only 2 decimals
+							
+### Lists: 
+			Note: In python Lists and strings are both examples of sequences. There are other sequences too. As a result working with lists are as same as working with strings.
+				  Major difference is that lists are mutable.
+				  
+			Note: Methods which can be used on lists,
+				fruits = ["a", "b","c"]
+				fruits.append("d") #append at the end fruits list
+				fruits.index("d") #returns index of "d" from fruits list
+				fruits.insert(0, "hello") #inserts "hello" at the index 0
+				fruits.insert(1000, "world") #if fruits lists doesn't have index 1000 already then "world" is just added at the end of list.
+											#if fruit lists  has any value alreadyat index 1000 then it 1000th index will be "world" rest all values of that list is shifted to right by one index.
+				fruits.remove("c") #remove specified value from fruits list. If sspecified value is not in list then throws valueError.
+				fruits.pop(1) #result "b", this method returns removed item from the list. here pop(index value which has to be removed)
+				fruits.sort() - Sorts the items in the list
+				fruits.reverse() - Reverses the order of items of the list
+				fruits.clear() - Removes all the items of the list
+				fruits.copy() - Creates a copy of the list
+				fruits.extend(other_list) - Appends all the elements of other_list at the end of list
+				
+			Note: String "" are sequences of character and they are immutable.
+				  List [] are sequences of elements of any type  and they are mutable.
+				  Tuples () are sequences of elements of any type and they are immutable.
+				  
+			Note: When a function is returning more than one value then it would return as a Tuples.
+				Ex: def my_function():
+						a = 2
+						b = 4
+						c = 6
+						return a,b,c
+						
+					result = my_function()
+					print(result)  #returns (2,4,6)
+					print(type(result))  #returns tuple
+					
+					#to unpack tuple
+					my_a, my_b, my_c = my_function()
+					print(my_a, my_b, my_c)  #2,4,6
+					
+			Note: Enumerate function to get index and items of a iterables.
+				  While using enumerate first value is always index.
+				  The enumerate() function takes a list as a parameter and returns a tuple for each element in the list.
+					The first value of the tuple is the index and the second value is the element itself.
+				Ex: winners = ["Ben","Joe", "Bob"]
+					for index,person in enumerate(winner):
+						print("{} - {}".format(index + 1, person))
+						
+			Note: List comprehension:
+					Ex: times_two = [n*2 for n in range(1, 11)] #result [2,4,6,8,10,12,14,16,18,20]
+					Ex: times_two_new = [n for n in range(1, 21) if n % 2 == 0] #result [2,4,6,8,10,12,14,16,18,20]
+			
+### Dictionaries:
+			Note: Dictionaries are another data structure in Python. They are mutable
+				Ex: my_dic = {"jpeg": 10, "txt": 3,"py": 20}
+					my_dic["py"]  #return 20
+					my_dic["html"]  #error
+					my_dic["csv"] = 6  #added new key,value pair to my_dic where key is "csv" and value is 6
+					del my_dic["csv"] #delete key value csv:6 from my_dic
+			
+			Note: Iterating through dictionaries
+				Ex1: for n in my_dic:
+						print(n)  #returns only keys of my_dic
+				
+				Ex2: for key,value in my_dic.items():
+						print("key is {} | value is {}".format(key,value))  #returns both key and value with the use of .items() method. items() method returns tuple.
+						
+				Ex3: for value in my_dic.values():
+						print(value) #return only values
+						
+				Ex4: for key in my_dic.keys():
+						print(key)  #return only key
+			
+			Note: keys of dictionaries can only be of type string, numbers, boolean & tuple.
+					But on the other side values of dictionaries can be of any data type str, int, boolean, lists, tuple, dictionaries.
+					
+			Note: Set It is like a cross between lists and dictionaries
+					A set is used when you want to store a bunch of elements and be certain that there are only present once.
+					Elements of a set must also be immutable.
+					A set can contain any data type.

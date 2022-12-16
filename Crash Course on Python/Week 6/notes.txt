@@ -1,0 +1,9 @@
+		Writing a Script from the Ground Up:
+			Note: sort() sort all the items in that lists
+				  sorted(passInSomeList) returns a new list without altering existing list.
+			
+
+			R: Famous books that are available online.  https://www.gutenberg.org/
+
+		Final Project:
+			Word Cloud

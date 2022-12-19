@@ -1,0 +1,97 @@
+# WEEK 2:
+### Reading and Writing Files:
+			Absolute path c:/User/example  it's always a full path.
+			Relative path is wrt the current folder.
+			
+			Note: Difference b/w readline() and read()
+					Both methods read from the current position. 
+					The readline() method reads one line, 
+					while read() reads until the end of the file.
+					
+					file = open("filePath.extention")
+					print(file.readline())   #returns first line/ line from current possition
+					print(file.read())
+					
+					#with WITH keyword
+					with open("path") as file:
+						print(file.readline())
+						
+			Note: It's always good to read line by line if the file is too large. If not it will use much of our computer memory.
+			
+			Note: open("filePath", "r")  #by default open()function opens file in read mode. We can use these mothods to read contents read(),readline(), readlines()
+				  open("filePath", "w")  #if no such file then it will create one,else it will overwrite existing file. We can use write() method to write contents.
+										 #write() method returns number of character to a file.
+				  open("filePath","a") #append a new line with write method.
+				  
+				  Note: If we try to write in read mode or read in write mode we get an error.
+				  Note: When using write mode, the old contents get deleted as soon as the file is opened.
+				  R: Offical doc for open() function and its modes https://docs.python.org/3/library/functions.html#open
+				  
+### Managing Files and Directories:
+			import os   #os module is use operates on files
+			import datetime 
+			
+			os.remove("fileName.extension")   #remove if file exists,if not then throw fileNotFound error
+			os.rename("fileNameToChange", "newName") #rename if file exists,if not then throw fileNotFound error
+			os.path.exists("fileName.extension")  #returns True if exists or False if not
+			os.path.isfile("fileName.extension")
+			os.path.getsize("fileName.extension")  #returns file size in bytes.
+			os.path.abspath("fileName.extension")  #returns absolute path of the file
+			os.path.getmtime("fileName.extension")  #returns last modified time stamp of the file.
+			#with the help of datetime module we can convert timestamp into human readable result
+			timestamp = os.path.getmtime("fileName.extension")
+			datetime.datetime.fromtimestamp("fileName.extension")  #returns datetime.datetime(yyy, )
+			os.getcwd()  #returns current working directory similar to pwd in linux
+			os.chdir("directoryName")  #change from current working directory to specified "directoryName".
+			os.mkdir("newDirectoryName")  #creats new directory
+			os.rmdir("directoryNameToremove")  #removes directory if it is empty. If it is not empty then throws error.
+			os.listdir() #returns list with all files and folder inside current working directory
+			os.listdir("directoryName")  #returns all files & folders inside "directoryName" folder
+			os.path.isdir("directoryName")  #True if "directoryName" is a folder, False if not
+			os.path.join("website", "image")   #returns website/image Note: os.path.join adds tailing forward(for Mac & Linux) or backward(for windows) shash according to your OS.
+			
+			R: https://docs.python.org/3/library/os.html
+			R: https://docs.python.org/3/library/os.path.html
+			R: https://en.wikipedia.org/wiki/Unix_time
+			
+### Reading and Writing CSV Files:
+			Parsing: Analyzing a files content to correctly structure the data.
+						Rules to understand a file or datastream as structured data.
+						
+### Working with csv: Reading csv file 
+				import csv
+				file = open("fileCSV.txt")
+				csv_f = csv.reader(file)   #interpret file as csv
+				for row in csv_f:
+					pass   #we get each row 
+					
+			Working with csv: Writing csv file
+				import csv
+				
+				hosts = [["workstation.local", "192.168.00.00"], ["webserver.cloud", "10.2.5.6"]]
+				with open("host.csv", "w") as hosts_csv:
+					writer = csv.writer(hosts_csv)
+					writer.writerows(hosts)    #to write one row we can use writerow
+					
+					
+			Reading and Writing csv files with dictionaries
+				with open(file.csv) as file:
+					reader = csv.DictReader(file)
+					for row in reader:
+						pass
+						
+				Writing from dictionaries
+					users = [{name:"XXXXX", username: "XX", department:"X"},
+							{name:"YYYYY", username: "YY", department:"Y"}]
+					key = ["name", "username", "department"]
+					with open("file.csv","w") as file:
+						write = csv.DictWriter(file, fieldname=keys)
+						writer.writeheader()  #creats first line based on keys we had passed
+						writer.writerows(users)
+						
+				R: https://docs.python.org/3/library/csv.html
+				R: https://realpython.com/python-csv/
+				
+### Module Review:
+			A virtual machine, or VM, is a computer simulated through software.
+				It simulates all the necessary hardware to the operating system that's running inside the machine.

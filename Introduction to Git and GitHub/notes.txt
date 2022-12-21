@@ -1,1 +1,58 @@
+WEEK 1:
+		Before Version Control:
+			diff command: The diff tool shows all the differences between any type of file. By highlighting what’s changed, it helps us understand the changes and see how the files have been modified.
+				Ex: diff -u test1.txt test2.txt  #difference between test1 & test2 in detail
+				Ex: diff -u test1.txt test2.txt > changes.txt   #write changes between 2 files to changes.txt
+			wdif : highlightes words that are changed.
+			Note: some graphical interface to show differences meld, KDiff3, vimdiff.
+			Note: While diff is the command that generates the difference between two files, patch is the command that applies those differences to the original file.
+				Ex: diff -u test1.txt test2.txt > changes.diff   #write changes between 2 files to changes.diff
+				Ex: patch test2.txt < changes.diff   #write changes from changes.diff file to test2
+			
+			R: http://man7.org/linux/man-pages/man1/diff.1.html
+			R: http://man7.org/linux/man-pages/man1/patch.1.html
 
+		Version Control System:
+			Note: Git is a VCS created in 2005 by Linus Torvalds.
+			Note: git-scm here scm is Source Control Management. SCM & VCS is one and the same.
+			Note: Other popular VCS programs Subversion, Mercurial.
+			Note: Git is a distributed version control system and not centralized.
+			
+			R: https://git-scm.com/doc
+			R: https://www.mercurial-scm.org/
+			R: https://subversion.apache.org/
+			R: https://en.wikipedia.org/wiki/Version_control
+			
+			Note: MINGW64 is a environment which comes with windows Git installer which helps us to use same commands and tools as that of Linux machine.
+			R: Installation guide for Git Git download page https://git-scm.com/downloads
+			   Git installation instructions for each platform https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+		
+		Using Git:
+			git config -l  #to check all info about git like user.name, user.email etc..
+			git config --global user.email "my@email.com"   #--global will set email for all repository
+			git config --global user.name "My name"   #--global will set name for all repository
+			ls -l .git/  #.git is a hidden folder that holdes all git related info (configuration, HEAD,dsecription, branch) regarding that repository.
+						# whenever we clone any repository this .git folder gets copied too.
+						
+			Note: Git directory acts as a database for all the changes tracked in Git.
+				The working tree acts as a sandbox where we can edit the current versions of the files.
+			
+			git add fileName  #this command add fileName to staging area.
+			Note: Staging area(Index): A file maintained by Git that contains all of the info about what files and changes are going to go into your next commit. 
+			
+			Note: After we do git init for any folder any files in that folder goes through these stages,
+					Modifies ---> Staged ---> Commited
+					
+			Note: We can't commit without any commit message. If we do so commit will be aborted.
+			
+			Note: Key things to note while writing git commit messages,
+					"#" symbol is used as a comment
+					First line is a brief description what this commit is all about.
+					Very next line is left empty
+					Then complete description about what this commit is all about including any links if required.
+					
+			R:  Linux kernel documentation https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/submitting-patches.rst?id=HEAD
+			R: http://stopwritingramblingcommitmessages.com/
+			R: https://robots.thoughtbot.com/5-useful-tips-for-a-better-commit-message
+			R: https://help.github.com/articles/setting-your-email-in-git/
+			R: https://help.github.com/articles/keeping-your-email-address-private/

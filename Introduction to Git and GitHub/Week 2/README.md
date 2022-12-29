@@ -1,0 +1,109 @@
+# WEEK 2: 
+### Advanced Git Interaction:
+			Note: git commit -a -m: A shortcut to stage any changes to tracked files and commit them in one step. Insted of "git add"  and then "git commit".
+								If we're making a small changes and want to skip the staging step, then we can use this command ie git commit -a -m "with short commit message"
+								
+			Note: HEAD in git : Git uses the HEAD alias to represent the currently checked-out snapshot of your project.
+								
+			Note: git log -p  #shows log message(commit id, author name,id, date & time) along with that we can also see actual difference between previous commit and current commit file and associate patches.
+				  git show commit_id #show specified commit_id info and its associate.
+				  git log --stat  #shows stats about commits, like which files were changed & how many lines were added orremoved.
+				  git diff  #shows difference(its simillar to diff -u) which are not staged.
+				  git diff --stage  #show difference that are staged but not commited.
+				  git add -p  #shows difference and asks if we want to add to staging area.
+				  git rm file_name  #removes from repository and no longer been tracked. After this we have to commit using git commit -m "with proper commit message"
+				  git mv old_file_name new_file_name #to rename a file from old_file_name to new_file_name or to move from one directory to another.
+				  
+			Note: 
+				git commit -a Stages files automatically  	https://git-scm.com/docs/git-commit#Documentation/git-commit.txt---all
+				git log -p Produces patch text		https://git-scm.com/docs/git-log#_generating_patch_text_with_p
+				git show Shows various objects		https://git-scm.com/docs/git-show
+				git diff Is similar to the Linux `diff` command, and can show the differences in various commits		https://git-scm.com/docs/git-diff
+				git diff --staged An alias to --cached, this will show all staged files compared to the named commit		https://git-scm.com/docs/git-diff
+				git add -p Allows a user to interactively review patches to add to the current commit		https://git-scm.com/docs/git-add
+				git mv Similar to the Linux `mv` command, this moves a file		https://git-scm.com/docs/git-mv
+				git rm Similar to the Linux `rm` command, this deletes, or removes a file		https://git-scm.com/docs/git-rm
+				
+			Note: 
+				R: https://github.github.com/training-kit/downloads/github-git-cheat-sheet.pdf
+				R: https://git-scm.com/docs/gitignore
+				R: Git ignore file https://gist.github.com/octocat/9257657
+				
+### Undoing Things:
+			Note: git log -2  #shows last 2 commits only.
+			Note: git checkout to revert changes to modify files before they get staged.
+					this command will restore the file to latest storage snapshot which can be staged or commited.
+					
+			Note: git reset HEAD file_name  #to unstage file_name & remove it from staging. Its the exact opposite of git add
+			
+			Note: git commit --amend  #allows tomodify and add changes to the most recent commit. This will re-write git history replacing with amended one. commit id will change too.
+					Note: Avoud amending commits that have already been made public.
+			
+			Note: git revert  #it is used to rollback to previous commit. It create new commit with inverse changes. This cancels previous changes insted of making it as through the original commit never happened.
+			
+			Note: commit id is 40 character long string
+			
+			Note: 
+				R: git checkout https://git-scm.com/docs/git-checkout
+				R: git reset https://git-scm.com/docs/git-reset#_examples
+				R: resetting repo https://jwiegley.github.io/git-from-the-bottom-up/3-Reset/4-doing-a-hard-reset.html
+				R: git commit --amend https://git-scm.com/docs/git-commit#Documentation/git-commit.txt---amend
+				R: git revert https://git-scm.com/docs/git-revert
+				R: git rollback commands https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things
+				R: https://en.wikipedia.org/wiki/SHA-1
+				R: https://github.blog/2017-03-20-sha-1-collision-detection-on-github-com/
+				
+			Note: 
+				git revert will create a new commit to reverse the previous one, and is the best option for undoing commits on public branches.
+				If we want to roolback a commit on a public branch that wasn't the most recent one using rhe revert command we can use the commit id at the end of the git revert command.
+				git commit --amend will overwrite the previous commit with what is already in the staging area.
+				git show command without an object parameter(commit id) specified  will default to show us information about the commit pointed to by the HEAD.
+			
+			
+### Branching and Merging:
+			Branch is a pointer to a particular commit
+			git branch  #to list all branches
+			git branch newBranchName  #to create new branch named newBranchName
+			git checkout branchName #to switch between branches
+				Note: We use git checkout to check out the latest snapshot for both files and for branches.
+				
+			git checkout -b newBranchName  #to create new branch called newBranchName and switching to it all in one command
+			git branch -d branchName #to delete specified branchName
+				Note: if branch is not merged with the master yet, then git will throw an error. And if we still want to delete then we can use git branch -D branchName
+			
+			git merge branchName  #merges data and history together.
+				Note: to perform merge git uses either fast-forword algorithm  or three-way merge.
+			
+			Note: merge conflict occurs when we try to merge 2 files which are been edited in both master as well as in branch. And git throws an error.
+					Advantage of git throwing error is it prevents loss of work if two lines of 2 files overlap.
+			Note: show merg conflict between 2 files
+				<<<<<<<<<HEAD
+				print("In master branch")
+				==============
+				print("In new branch")
+				>>>>>>>>newBranch
+				
+				if we want to keep both changes we can do so,
+				print("In master branch")
+				print("In new branch")
+				
+				if we want to keep version represented by the current branch,then we can do so
+				print("In master branch")
+			
+			git merge --abort to stop merge	and reset files in working tree	back to the previous commit 
+			
+			Note:
+				git branch  Used to manage branches  https://git-scm.com/docs/git-branch
+				git branch <name> Creates the branch	https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging
+				git branch -d <name> Deletes the branch		https://git-scm.com/docs/git-branch#Documentation/git-branch.txt--D
+				git branch -D <name> Forcibly deletes the branch	https://git-scm.com/docs/git-branch#Documentation/git-branch.txt--D
+				git checkout <branch>  Switches to a branch.	https://git-scm.com/docs/git-checkout
+				git checkout -b <branch> Creates a new branch and switches to it.	https://git-scm.com/docs/git-checkout#Documentation/git-checkout.txt--bltnewbranchgt
+				git merge <branch>  Merge joins branches together. 	https://git-scm.com/docs/git-merge
+				git merge --abort  If there are merge conflicts (meaning files are incompatible), --abort can be used to abort the merge action.
+				git log --graph --oneline  This shows a summarized view of the commit history for a repo.	https://git-scm.com/book/en/v2/Git-Basics-Viewing-the-Commit-History
+				
+			Note: 
+				A three-way-merge occurs when the two commits have diverged previously, and a new commit is created.
+				git log --graph --oneline 	#shows a summarized view of the commit history for a repo with graph showing one line per commit.
+				

@@ -1,0 +1,115 @@
+# WEEK 3:
+### Introduction to GitHub:
+			GitHub provides free access to a Git server for public and private repositories.
+			Other similar remote repository services like GitHub are BitBucket, GitLab.
+			
+			
+			Note:  git clone <url from GitHub>   #to make a copy of remote repository to local machine. 
+				   git push       #to push changes to remote repository from local repository. It is used to update the remote repository with our local changes.
+				   git pull       #to retrieve new changes from the repository. It updates local repository by applying changes made in the remote.
+			
+			Note: While cloning and while pushing we have to enter credentials every time.
+					So to avoid this we can use,
+						SSH key-pair -- which our public key in the profile so github recognizes our computer.
+						credentials-helper  --  Git aready comes with credentials helper. We just have to enable it.
+							We can enable it by using this command,
+								git config --global credential.helper cache    #now we just need to enter credentials only once & it will be cached for 15 minutes.
+						
+			
+			
+			
+			R: git clone URL: Git clone is used to clone a remote repository into a local workspace  https://git-scm.com/docs/git-clone
+			R: git push: Git push is used to push commits from your local repo to a remote repo  https://git-scm.com/docs/git-push
+			R: git pull: Git pull is used to fetch the newest updates from a remote repository  https://git-scm.com/docs/git-pull
+			R: https://help.github.com/en/articles/caching-your-github-password-in-git
+			R: https://help.github.com/en/articles/generating-an-ssh-key  
+		
+		
+### Using a Remote Repository:
+			Note: if the master repository receives a major update since the last local copy was synced, it is considered as pending changes & git will let you know its time for a update.
+			Note: We can connect with remote repository using http, https or ssh protocols.
+					http    ----gives read only access to a repo. ie we can clone a repo but not able to push new contents into it.
+					where https and ssh allows both read and write access.
+			
+			Note: git remote -v    #to know configuration of cloned repository (either it has read access or write access)
+					origin http://github.com/userName/repo-name.git (fetch)    --only read access
+					origin https://github.com/userName/repo-name.git (push)    --both read and write access.
+			
+			Note: git remote show origin     #to show more info about remote repo.
+			Note: git branch -r         #to show info about remote branches.
+			
+			Note: If we want to make a change to a remote branch, we have to pull the remote branch, merge it with the local branch, then push it back to its origin.
+			Note: git status      #same command to check status of both local and remote repo.
+			Note: git fetch      #to sync data. This command copies commits made in remote repo to remote branches. 
+			
+			Note: git merge origin/master      #merges origin/master to local master branch.
+			
+			Note: Main difference between git fetch & git pull,
+					git fetch fetches remote update but doesn't merge. git fetch only retrieves remote updates.
+					git pull fetches remote update and merges. git pull instantly merges
+			
+			Note: If there is no merge conflicts, Git will move the current branch tip up to the target branch tip and combine histories of both commits using Fast-forward merge.
+			
+			R:  git remote   ----Lists remote repos https://git-scm.com/docs/git-remote
+			R:  git remote -v    -------List remote repos verbosely https://git-scm.com/docs/git-remote#Documentation/git-remote.txt--v
+			R:  git remote show <name>     ------Describes a single remote repo https://git-scm.com/docs/git-remote#Documentation/git-remote.txt-emshowem
+			R:  git remote update       -----Fetches the most up-to-date objects https://git-scm.com/docs/git-remote#Documentation/git-remote.txt-emupdateem
+			R:  git fetch     ------Downloads specific objects  https://git-scm.com/docs/git-fetch
+			R:  git branch -r     -----Lists remote branches; can be combined with other branch arguments to manage remote branches  https://git-scm.com/docs/git-branch#Documentation/git-branch.txt--r
+			R:  https://www.coursera.org/learn/it-security/item/P1I8z
+			
+			Note: An explicit merge creates a new merge commit. This alters the commit history and explicitly shows where a merge was executed.
+			`git remote update   #will fetch the contents of all remote branches and allow us to merge the contents ourselves. It gets the contents of a remote branch without automatically merging.
+			 git remote show origin  #if you want to see more information about a particular remote branch. Don't forget the commit ID!
+			 git fetch     #will download remote updates, such as objects and refs, from the remote branch.
+								download remote branches from remote repositories without merging the content with your current workspace automatically.
+			 git pull    #automatically merges the remote branch with the current local branch.				
+			 					
+		
+### Solving Conflicts:
+		
+			Note: git add -p  #lets us to look at the changes we made and asks whether we want to add it to staging area.
+			
+			Note: When we have changes in remote repo & we are trying to push to remote repo from local repo we get an error. So workaround for this is to
+					make a pull request first from remote repo to local repo and then push it to remote repo.
+			
+			Note: What should you do with the <<<<<<<, =======, and >>>>>>> conflict markers when resolving a merge conflict?
+					Remove all of the conflict markers and only leave the code as it should be after the merge.
+					
+			Note: git push -u origin <branchName>    #push <branchName> to remote(-u) origin repo. 
+			
+			Note: Rebase:
+					git rebase <branchName> move the current branch on the top of the <branchName>.
+					Rebasing means changing the base commit that is used for our branch.
+					"git rebase" is an alternative to "git merge" command.
+					Rebasing instead of merging rewrites history and maintains linearity, making for cleaner code.
+			
+			Note: git push --delete origin <branchName>    #to remove branch in remote repo.
+				  git branch -d <branchName>      #to remove branch in local repo.
+		
+			R: https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-merge-conflicts
+			R: https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/resolving-a-merge-conflict-using-the-command-line
+			R: https://git-scm.com/book/en/v2/Git-Branching-Rebasing
+			R: https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History
+			
+			
+			Note:
+				If you’re making changes to a local branch while another user has also made changes to the remote branch, which command will trigger a merge?
+					git pull 
+					The git pull command runs git fetch with the given parameters, then calls git merge to merge the retrieved branch heads into the current branch.
+					
+				git rebase is useful for maintaining a clean, linear commit history.
+
+				It's common practice to keep the latest version in the master branch and the latest stable version in a separate branch.
+				
+				Best practices for collaboration:
+					-When working on a big change, it makes sense to have a separate feature branch. By doing so you can work on new changes,
+						while still enabling you to fix bugs in the other branch.
+					-Always synchronize your branches before starting any work on your own. That way, whenever you start changing code,
+						you know that you're starting from the most recent version, and you minimize the chances of conflicts or the need for rebasing.
+					-Avoid having very large changes that modify a lot of different things. Instead, try to make changes as small as possible, as long as they’re self-contained.
+					
+				 
+		
+		
+		Module Review:

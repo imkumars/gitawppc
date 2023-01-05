@@ -1,1 +1,118 @@
-
+WEEK 4:
+		Data Streams:
+			Note: Standard Streams: Are programs which receives and send information from and to machine.
+					STDIN ----standard input  where machine receive i/p from
+					STDOUT ----standard output where machine displays o/p
+					STDERR ----standard error  where machine displays o/p but more specific to error while running any program.
+					
+			Environment Variables:
+				Note: Shell is a CLI(command line interface)used to interact with your operatingsystem.
+						Most comman linux shell is Bash. Other popular shell are zsh, fish.
+						
+				Note: Python program get executed inside a shell command line environment.
+						Variables set in that environment is called environment variables.
+				
+				Note: The variables set in that environment are another source of information that we can use in our script.
+				Note: To check all environment variables in command line  -----   env    #shows all env variables of that machine.
+				Note: To print contents of PATH variable in terminal  ----------- echo $PATH     #prints all contents of PATH variable.
+				
+				Note: When we call python3 fieldname, shell checks each of directory listed in PATH variable in order. And when it finds a program called python3,it will exicutes it.
+			
+				Note: /usr/sbin/temp is not listed in PATH variable by default.
+				
+				Note: we use os module to get env variables. Here environ is a dictionaries.
+						
+							import os
+							
+							print("HOME: " + os.environ.get("HOME",""))
+							print("FRUIT: " + os.environ.get("FRUIT",""))
+							
+						
+					Note: .get() is used on dictionaries to access value of a dictionaries.
+							Important difference b/w usual way of accessing value from dictionaries and using .get() method is that,
+								when we dont have a value for a perticular key, then we get an error. But if we use .get() method we dont get an error insted prints default value.
+							
+							Ex: os.environ["FRUIT"]      #if this key:value pair doesnt exists then we get Namerror.
+								os.environ.get("FRUIT","defaultValue")   #if this key:value pair doesnt exists then we get "defaultValue".
+					
+					Note: Setting environment variable,
+							export FRUIT=Pineapple
+							
+					Note: Command line arguments stored in sys. The list of arguments are stored in the sys module.		
+							
+							import sys
+							print(sys.argv)       #prints all parameters received while calling this script.
+							
+							./fileName.py   #prints ["./fileName.py"]
+							./fileName.py one two   #prints ["./fileName.py,"one", "two"]
+								print(sys.argv[0])  #prints "./fileName.py"
+								print(sys.argv[1])  #prints "one".
+								print(sys.argv[2])  #prints "two"
+							
+					Exit status: It is the value returned by a program to the shell.
+							In all Unix-like operating systems, the exit status of the process is zero when the process succeeds and different than zero if it fails.
+							
+						Note: To check the exit status of a program, we can use a special variable (?) that lets us see what the exit status of the last executed command was.
+							We can view them using $?
+							
+							Ex: In terminal 
+								cat fileNameThatExists     #view all contents of the file.
+								$?                         #will return "0"  because its previous command i.e cat command ran successfully
+							
+							again 
+								cat fileNameThatDoesntExists   
+								$?                           #will return other than "0", which says its previous command failed.
+			
+						
+						Note: In our python scripts we can use sys.exit(<valueOtherThanZero>)
+								Ex: import sys
+									new_val = "hello"
+										if new_val != "hello":
+											sys.exit(1)
+											
+						Note:
+							Which command will print out the exit value of a script that just ran successfully?
+								echo $?  ----Echo will print out the exit value (question mark variable) of a script that just ran successfully.
+								
+							Export command will create a new environment variable, and give it a value.
+							
+							Which I/O stream are we using when we use the input function to accept user input in a Python script?
+								STDIN is the standard I/O stream for input.
+							
+							An exit value of 0 always indicates the program exited without error.	
+							
+							In Python 2, input evaluates the user's input as an expression.
+							raw_input gets a raw string from the user.
+				
+		
+		Python Subprocesses:
+			If we want to run system program we can do by using subprocess module.
+			When we .run() function from subprocess module we get CompletedProcess() object which has args= and returncode= which is either 0(if subprocess is successfully) or any other number.
+			The parent process is blocked while the child process finishes.
+				While the parent process is waiting on the subprocess to finish, it’s blocked, meaning the parent can’t do any work until the child finishes.
+			The child process is run in a secondary environment.
+				To run the external command, a secondary environment is created for the child subprocess, where the command is executed.
+			Control is returned to the parent process when the child process ends.
+				After the external command completes its work, the child process exits, and the flow of control returns to the parent.
+				
+				
+				Ex: import subprocess
+					subprocess.run(["date"])   #returns system date and CompletedProcess(args=["date"], returncode=0) object with returncode.
+					subprocess.run(["sleep", "2"])   #returns CompletedProcess(args=["sleep", "2"],returncode=0). which causes delay or sleep for 2seconds.
+					
+			.run() function is usefull whenever we just wantto know if execution was successfully ot not by tapping into returncode property.
+		
+			Note: If we want to capture subprocess output we can do so by passing capture_output=True for .run() function
+					
+					Ex: import subprocess
+						result = subprocess.run(["rm", "fileDoesntExist"], capture_output=True)   #trying to remove file "fileDoesntExist" using "rm" command.  
+						
+						print(result.returncode)    #returns 1
+						print(result.stdout)        #returns  b"". Here 'b' at the start is the python way of saying the output format is in byte formant and not string.   
+							print(result.stdout.decode())   #to return in string format.	
+						print(result.stderr)        #returns error message generated if any in b""
+						
+			R: https://docs.python.org/3/library/subprocess.html
+			
+		Processing Log Files:
+		Module Review:

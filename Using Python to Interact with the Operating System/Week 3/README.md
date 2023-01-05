@@ -1,0 +1,136 @@
+# WEEK 3:
+### Regular Expressions:
+			A regular expression, also known as regex or regexp, is essentially a search query for text that's expressed by string pattern.
+				It allows us to search a text for string matching a specific pattern.
+				
+			Note: We can use "re" module and use search function to perform certain search operations. ie re.search()
+			Note: "grep" prints any line matching certain character.
+				  "grep" is a command line regex tool. It's not part of "re" python module.
+					Ex: grep characters_to_search file_name  #returns all lines matching characters_to_search
+					Ex: grep -i chars_to_search file_name    #here -i flage (case insensitive) is used to search irrespective of uppercase or lower.
+			Note: dot(.) is used as a wildcard
+				Ex: grep l.rts fileName   #returns "alerts", "flrts"
+				
+			Note: some special characters (meta character) we can use in regex are,
+				^(caret or circumflex) -------which indicates beginning
+				$(dollar)   -------- indicates end of the line.	
+				
+				Ex: grep ^fruit file_name  #returns "fruit", "fruitcake", "fruits"
+				Ex: grep cat$ file_name  #returns "cat", "copycat", "scat"	
+				
+### Basic Regular Expressions:
+			Note: Its always good to use rawstring while using regex.
+			Note: r"any_string" here "r" indicates "rawstring". Which means Python interpreter shouldn't interpret any special characters, and instead, should just pass the string to the function as is.
+				Ex: print(re.search(r"aza", "plaza"))  #returns match object <re.Match object; span=(2,5),match='aza'>
+				Ex: print(re.search(r"^x", "xenon"))  #returns match object <re.Match object; span=(0,1),match='x'>
+				Ex: print(re.search(r"p.ng", "penguin"))  #returns match object <re.Match object; span=(0,4),match='peng'>
+				Ex: print(re.search(r"p.ng", "sponge"))  #returns match object <re.Match object; span=(1,5),match='pong'>
+				Ex: print(re.search(r"aza", "sponge"))  #returns None
+				To ignore case
+				Ex: print(re.search(r"p.ng", "Pangaea"))  #returns match object <re.Match object; span=(0,4),match='Pang'>
+			
+			Note: Character classes are written inside square brackets and let us list the characters we want to match inside of those brackets.
+				Ex: print(re.search("cloud[a-zA-Z0-9]", "cloudy"))  #returns <re.Match object; span=(0, 6), match="cloud9">
+				
+				Not to match using ^ inside [] like this [^]
+				Ex: print(re.search("cloud[^a-zA-Z]", "This is a"))  #returns <re.Match object; span=(4, 5), match=" ">
+				
+				To find either of them using "|"
+				Ex: print(re.search(r"cat|dog", "i like dog"))  #returns <re.Match object; span=(7, 10), match="dog">
+				
+				Using findall function from re module
+				Ex: print(re.findall(r"cat|dog", "i like both dogs and cats"))  #returns ["dog", "cat"]
+				
+				Multiple match using "*". Its also called as repetition qualifiers
+				Ex: print(re.search(r"py.*n", "pygmalion"))  #returns <re.Match object; span=(0, 9), match="pygmalion">
+				Ex: print(re.search(r"py.*n", "python programming"))  #returns <re.Match object; span=(0, 17), match="python programmin">
+				Ex: print(re.search(r"py[a-z]*n", "python programming"))  #returns <re.Match object; span=(0, 6), match="python">
+				Ex: print(re.search(r"py[a-z]*n", "pyn"))  #returns <re.Match object; span=(0, 3), match="pyn">
+			
+			Note: egrep use two additional repetition qualifiers "+" and "?"
+				"+" ------The plus character matches one or more occurrences of the character that comes before it.
+				Ex: print(re.search(r"o+l+", "goldfish"))  #returns <re.Match object; span=(1,3), match="ol">
+				Ex: print(re.search(r"o+l+", "wolly"))  #returns <re.Match object; span=(1,5), match="ooll">
+				Ex: print(re.search(r"o+l+", "boil"))  #returns None
+				
+				"?" ---------The question mark symbol is another multiplier. It means either zero or one occurrence of the character before it.
+				Ex: print(re.search(r"p?each", "To each on"))  #returns <re.Match object; span(3,7), match="each">
+				Ex: print(re.search(r"p?each", "To peach on"))  #returns <re.Match object; span(3,8), match="peach">
+				
+			Note: Escape character "\"
+				Ex: print(re.search(r".com", "welcome"))  #returns <re.Match object; span=(2,7), match="lcome">
+				So for us to get .com we can use escape character in front of . like this "\."
+				Ex: print(re.search(r"\.com", "welcome"))  #returns None
+				
+				"\w" matches number,letters,& underscore
+				Ex: print(re.search(r"\w*", "wel_come_"))  #returns <re.Match object; span=(0,9), match="wel_come_">
+				Ex: print(re.search(r"\w*", "wel _come_"))  #returns <re.Match object; span=(0,3), match="wel">
+				
+				"\d" ----to match digits
+				"\d+" ----to match didits one or more
+				"\D"  -----not to match digit or simply non-digits
+				"\s" -----to match whitespace, tab or new line
+				"\b" -----word boundaries
+	
+			
+			Note: Construct regex by starts with an uppercase letter, followed by at least some lowercase letters or a space, and ends with a period, question mark, or exclamation point:
+				re.search(r"[A-Z][a-z ].*[.?!]$", someText)
+				
+				Construct regex to lsit all contries start and end with a:
+				re.search(r"A.*a$", lits_of_contries)
+				
+				Construct regex to have valid username which should start with alphabet or underscore and end with alphabetor number or underscore:
+				re.search(r"^[A-Za-z_][a-zA-Z0-9_]*$")
+				
+			R: https://docs.python.org/3/howto/regex.html
+			R: https://docs.python.org/3/library/re.html
+			R: https://docs.python.org/3/howto/regex.html#greedy-versus-non-greedy
+			R: http://regex101.com/	
+				
+				
+### Advanced Regular Expressions:
+			Capturing groups: Is a portions of the pattern that are enclosed in parentheses.
+			Ex: If we have last name followed by first name and we want to turn this around into first name followed by last name using groups
+				result = re.search(r"^([\w]), ([\w .]*)$","LastName, FirstName")
+				print(result.group())   #returns tuple ("LastName", "FirstName")
+				print(result[0])   #returns whole string LastName, FirstName
+				print(result[1])   #returns LastName
+				print(result[2])   #returns FirstName
+				"{}{}".format(result[2], result[1])   #"FirstName LastName"
+				
+			Note: For specific number of characters
+				Ex: print(re.search(r"[a-zA-Z]{5}", "a ghost"))  #returns <re.Match object; span=(2,7), match="ghost">
+				Ex: print(re.search(r"[a-zA-Z]{5}", "a scary ghost appenared"))  #returns <re.Match object; span=(2,7), match="scary">
+				Ex: print(re.findall(r"[a-zA-Z]{5}", "a scary ghost appenared"))  #returns ["scary", "ghost", "appea"]
+				Ex: print(re.findall(r"\b[a-zA-Z]{5}\b", "a scary ghost appenared"))  #returns ["scary", "ghost"]
+				Ex: print(re.findall(r"[a-zA-Z]{5,}", "a scary ghost appenared"))  #returns all words have at least 5 letters ["scary", "ghost", "appenared"]
+				Ex: print(re.findall(r"[a-zA-Z]{,20}", "I really like strawberries"))  #returns all words have at max of 20 letters ["strawberries"]  
+			
+			Note: Extract PID or process id
+				Ex: log = "computer process id or PID is [123456]"
+					regex_pattern = r"\[(\d+)\]"
+					result = re.search(regex_pattern, log)
+					print(result[1])  #returns 123456. Here we are using result[1] because here we are using capture group "()".
+					
+				Ex:
+					import re
+					def extract_pid(log_line):
+						regex = r"\[(\d+)\]: ([A-Z]*)"
+						result = re.search(regex, log_line)
+						if result is None:
+							return None
+						#print(result[0])
+						return "{} ({})".format(result[1], result[2])
+					
+					print(extract_pid("July 31 07:51:48 mycomputer bad_process[12345]: ERROR Performing package upgrade")) # 12345 (ERROR)
+					print(extract_pid("99 elephants in a [cage]")) # None
+					print(extract_pid("A string that also has numbers [34567] but no uppercase message")) # None
+					print(extract_pid("July 31 08:08:08 mycomputer new_process[67890]: RUNNING Performing backup")) # 67890 (RUNNING)
+					
+			Note:  Split
+				Ex: print(re.split(r"the|a", "One sentence. Another one? And the last one!"))   #returns ['One sentence. Ano', 'r one? And ', ' l', 'st one!']
+				
+			R: https://regexcrossword.com/
+			
+			Note: Sub ----It's used for creating new strings by substituting all or part of them for a different string.
+				Ex: re.sub(r"someMatching", "replaceThis", "In this sentence someMatching")  #In this sentence replaceThis

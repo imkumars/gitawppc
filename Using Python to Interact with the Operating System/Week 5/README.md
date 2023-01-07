@@ -1,0 +1,203 @@
+# WEEK 5:
+### Simple Tests:
+			Note: 
+				Software Testing: The process of evaluating computer code to determine whether or not it does what you expect it to do.
+				Test cases: Test cases means Possible values. Test cases automatically test with a range of possible values to verify the program’s behavior.
+				Automatic test: Codifying tests into its own software and code that can be run to verify that our programs do what we expect them to do is automatic testing.
+				
+
+### Unit Tests:
+			Unit test are used to verify that small, isolated parts of a program are correct. Example like testing a function or a method.
+			
+			Note: Production environment: 
+					This is a live environment that runs a software that users interact with.
+					
+			Note: Running python script from python interpreter:
+				Consider having my_script.py file, having a function called my_function() and if we want to run this function from python interpreter,
+				Now in terminal,
+					$python3
+					>>>from my_script import my_function
+					>>>my_function()                		#to call this function
+				
+			Writing first Unit Test:
+				-Write test case in a seperate script with same as file name adding _test to make us know it is a test script Ex: my_script_test.py
+				-We use unittest module which provide a TestCase class with a bunch of testing methods.
+				-Import our main script which we need to test
+				-We create a class (TestMyScript)which inherites "TestCase" class from unittest module.
+				-Any methods we define in our class that start with the prefix test will automatically become tests that can be run by the testing framework.
+				-Now we create new method/function inside our TestMyScript class
+				-Inside our new method we define/write what is our test case (possible value) and what is the expected value.
+				-We use self.assertEqual(call_our_my_function(withArgumentAstestcase), expected_value)
+					-self.assertEqual returns either True if my_function() returns same value as expected value.
+				-And now we call unittest.main() in my_script_test file. This .main() function runs the test for us.	
+		
+				Ex: my_script.py file has a function called my_function() which returns square of a number.
+				
+				-----------------------------------------------------------------------
+					
+					In my_script.py
+					
+						def my_function(num):
+							if isnumeric(num):
+								return num ** 2
+							
+							return "Error: Invalid number."
+							
+				-----------------------------------------------------------------------
+							
+					my_script_test.py is a test script for my_script.py
+					
+				-----------------------------------------------------------------------	
+					
+					In my_script_test.py
+						
+						import unittest
+						from my_script import my_function
+						
+						class TestMyScript(unittest.TestCase):
+							
+							# 1st test case
+							def test_my_function(self):
+								test_case = 4
+								expected = 16
+								self.assertEqual(my_function(test_case), expected)
+								
+							# 2nd test case
+							def test_my_function_again(self):
+								test_case = 2
+								expected = 4
+								self.assertEqual(my_function(test_case), expected)
+								
+							# 3nd test case
+							def test_my_function_again(self):
+								test_case = ""
+								expected = "Error: Invalid number."
+								self.assertEqual(my_function(test_case), expected)
+								
+						unittest.main()
+						
+					-----------------------------------------------------------------------
+					Ran 3 test in 0.00s
+						
+					OK
+					-----------------------------------------------------------------------
+						
+						
+					Note: Edge cases: Inputs to our code that produce unexpected results and 
+							are found at the extreme ends of the range of input we imagine our programs
+							will typically work with.
+							
+					
+					R: 
+						Understand a Basic Example: https://docs.python.org/3/library/unittest.html#basic-example
+						Understand how to run the tests using the Command Line: https://docs.python.org/3/library/unittest.html#command-line-interface
+						Understand various Unit Test Design Patterns: https://docs.python.org/3/library/unittest.html#organizing-test-code
+						Understand the uses of setUp, tearDown; setUpModule and tearDownModule
+						Understand more specific assertions such as assertRaises: https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertRaises
+						Understand basic assertions:
+							assertEqual(a, b)  https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertEqual
+							assertNotEqual(a, b)  https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertNotEqual
+							assertTrue(x) https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertTrue
+							assertFalse(x)  https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertFalse
+							assertIs(a, b) https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertIs
+							assertIsNot(a, b)  https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertIsNot
+							assertIsNone(x)  https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertIsNone
+							assertIsNotNone(x)  https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertIsNotNone
+							assertIn(a, b)  https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertIn
+							assertNotIn(a, b)  https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertNotIn
+							assertIsInstance(a, b)  https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertIsInstance
+							assertNotIsInstance(a, b)  https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertNotIsInstance
+							
+		
+### Other Test Concepts:
+			White box testing:
+				White-box testing also sometimes called clear-box or transparent testing relies on the test creators knowledge of the software being tested to construct the test cases. 
+				With a white-box test, the test creator knows how the code works and can write test cases that use the understanding to make sure that everything is performing the way it's expected to.
+				
+			Black box testing:	
+				In Black-box testing, the software being tested is treated like an opaque box. In other words, the tester doesn't know the internals of how the software works.
+				Black-box tests are written with an awareness of what the program is supposed to do, its requirements or specifications, but not how it does it.
+				
+			Integration tests:
+				Verify that the interactions between the different pieces of code in integrated environments are working the way we expect them to.
+				Goal of integration test is to verify interactions of network request or integration with an API or database, and make sure the whole system works how you expect it to.
+				Integration test, usually take the individual modules of code that unit test verify then combine them into a group to test.
+		
+			Regression test:
+				They're usually written as part of a debugging and troubleshooting process to verify that an issue or error has been fixed once it's been identified.
+		
+			Smoke test:
+				Smoke test sometimes called as build verification test.
+				When writing software smoke test serve as a kind of sanity check to find major bugs in a program.
+				Smoke test answer basic questions like, does the program run? Ex: Plug in the given piece of hardware and see if smoke starts coming out of it or is it running as expected.
+				These tests are usually run before more refined testing takes place. Since if the software fails the smoke test you can be pretty sure none of the other tests will pass either. 
+				This test finds out if the program can run in its basic form before undergoing more refined test cases.
+		
+			Load test:
+				These tests verify that the system behaves well when it's under significant load.
+				
+			Test-driven development:
+				A process called test-driven development or TDD calls for creating the test before writing the code.
+				The test-driven development cycle typically involves first writing a test then running it to make sure it fails (because we havn't written our script yet).
+				Once you've verified it fails, you write the code that will satisfy the test then run the tests again.
+				If it passes you can continue on to the next part of your program. If it fails you Debug and run the test again.
+				The cycle is repeated for each new feature of your script until it's up and running. 				
+				
+			R: https://landing.google.com/sre/sre-book/chapters/monitoring-distributed-systems/
+			R: https://landing.google.com/sre/sre-book/chapters/testing-reliability/
+			R: https://testing.googleblog.com/2007/10/performance-testing.html
+			R: https://www.guru99.com/smoke-testing.html
+			R: https://www.guru99.com/exploratory-testing.html
+			R: https://testing.googleblog.com/2008/09/test-first-is-fun_08.html
+			
+			Note:
+				Question 1:
+				Verifying an automation script works well with the overall system and external entities describes what type of test?
+					Integration test.
+					This test verifies that the different parts of the overall system interact as expected. 
+				
+				Question 2:
+				_____ ensures that any success or failure of a unit test is caused by the behavior of the unit in question, and doesn't result from some external factor?
+					Isolation.
+					By ensuring the unit of code we are testing is isolated, we can ensure we know where the bug originated.
+					
+				Question 3:
+				A test that is written after a bug has been identified in order to ensure the bug doesn't show up again later is called _____
+					Regression testing.
+					It is a type of software test used to confirm that a recent program or code change has not adversely affected existing features, by re-executing a full or partial selection test cases.
+					
+				Question 4:
+				What type of software testing is used to verify the software’s ability to behave well under significantly stressed testing conditions?
+					Load testing.
+					It verifies the behavior of the software remains consistent under conditions of significant load.
+					
+					
+### Errors and Exceptions:
+			The code in except block is only executed if one of the instructions in the try block raise an error of the matching type.
+			An exception is not meant to produce an error, but to bypass it. 
+			
+			Note: We can raise an error in python using "raise: keyword.
+					Ex: if new_value < 1:
+							raise ValueError("Min length should be more than 1.")
+		
+		
+			Note: Assert: This keyword is used to produce a message when certain condition is False.
+						  Assertions can be super helpful for debugging some code that's not behaving the way we expect it to. 
+					Ex: def square_num(num):
+							assert type(num) == int, "Number must be integer."    #throw an AssertionError if this condition is false
+		
+			Note: assertRaises from unittestmodule.
+				  First parameter is the error while passing it to assertRaises.
+					Ex: def testcase(self):
+							self.assertRaises(ValueError, function_name, "parameter")
+							
+			R: Raise allows you to throw an exception at any time. https://docs.python.org/3/tutorial/errors.html#raising-exceptions
+			R: Assert enables you to verify if a certain condition is met and throw an exception if it isn’t.
+				https://docs.python.org/3/reference/simple_stmts.html#the-assert-statement
+				https://stackoverflow.com/questions/5142418/what-is-the-use-of-assert-in-python
+			R: In the try clause, all statements are executed until an exception is encountered. https://docs.python.org/3/tutorial/errors.html#handling-exceptions
+			R: Except is used to catch and handle the exception(s) that are encountered in the try clause.  https://docs.python.org/3/library/exceptions.html#bltin-exceptions
+			R: Other interesting Exception handling readings:  https://doughellmann.com/posts/python-exception-handling-techniques/
+		
+		
+		Module Review:
